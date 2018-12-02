@@ -29,22 +29,17 @@
         var app = angular.module("listaTelefonica", []);
         app.controller("listaTelefonicaCtrl", function($scope) {
             $scope.app = "Lista telefonica";
+            // Lista de contatos exibidos e população
             $scope.contatos = [
                 {nome: 'Pedro', telefone: '12341234'},
                 {nome: 'Ana', telefone: '56785678'},
                 {nome: 'Maria', telefone: '90129012'},
             ];
             $scope.adicionarContato = function(contato) {
-                // // Não leia scope dentro do controller
-                // var contato = {
-                //     nome: $scope.nome,
-                //     telefone: $scope.telefone
-                // };
-                // var contato = {
-                //     nome: nome,
-                //     telefone: telefone
-                // };
+                // Realizando o angular.copy, para que a referência não seja igual
+                // e quando o item for editado, alterar outro objeto
                 $scope.contatos.push(angular.copy(contato));
+                // Excluindo o obj de contato
                 delete $scope.contato;
             }
         });
@@ -53,10 +48,6 @@
 </head>
 <body ng-controller="listaTelefonicaCtrl">
     <div class="jumbotron">
-        <!-- 
-        <h4>{{app + 'teste'}}</h4>
-        <h4>{{10*2}}</h4> 
-        -->
         <h3>{{app}}</h3>
         <table class="table table-striped">
             <tr>
@@ -69,13 +60,6 @@
                 <td>{{contato.telefone}}</td>
             </tr> 
            
-            <!-- 
-            <tr ng-repeat="contato in contatos">
-                <td ng-repeat="(key, value) in contato">
-                    {{value}}
-                </td>
-            </tr> 
-            -->
         </table>
 
         <hr/>
