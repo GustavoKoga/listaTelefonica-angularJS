@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="listaTelefonica">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Lista telefônica</title>
+
+    <script src="lib/angular/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
+    <style>
+        .jumbotron {
+            width: 400px;
+            text-align: center;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .table{
+            margin-top: 20px;
+        }
+        .form-control {
+            margin-bottom: 5px;
+        }
+    </style>
+
+    <script>
+        var app = angular.module("listaTelefonica", []);
+        app.controller("listaTelefonicaCtrl", function($scope) {
+            $scope.app = "Lista telefonica";
+            $scope.contatos = [
+                {nome: 'Pedro', telefone: '12341234'},
+                {nome: 'Ana', telefone: '56785678'},
+                {nome: 'Maria', telefone: '90129012'},
+            ];
+            $scope.adicionarContato = function(contato) {
+                // // Não leia scope dentro do controller
+                // var contato = {
+                //     nome: $scope.nome,
+                //     telefone: $scope.telefone
+                // };
+                // var contato = {
+                //     nome: nome,
+                //     telefone: telefone
+                // };
+                $scope.contatos.push(angular.copy(contato));
+                delete $scope.contato;
+            }
+        });
+    </script>
+
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+    <div class="jumbotron">
+        <!-- 
+        <h4>{{app + 'teste'}}</h4>
+        <h4>{{10*2}}</h4> 
+        -->
+        <h3>{{app}}</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+            </tr>
+            
+            <tr ng-repeat="contato in contatos">
+                <td>{{contato.nome}}</td>
+                <td>{{contato.telefone}}</td>
+            </tr> 
+           
+            <!-- 
+            <tr ng-repeat="contato in contatos">
+                <td ng-repeat="(key, value) in contato">
+                    {{value}}
+                </td>
+            </tr> 
+            -->
+        </table>
+
+        <hr/>
+
+        <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome" />
+        <input class="form-control"  type="tel" ng-model="contato.telefone" placeholder="Telefone"/>
+        <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)">Adicionar Contato</button>
+    </div>
+    
+</body>
+</html>
