@@ -145,7 +145,8 @@
             </select>
         </form>
 
-        <div ng-show="contatoForm.$invalid" ng-messages="contatoForm.nome.$error" 
+        <div ng-show="contatoForm.nome.$error.dirty" 
+            ng-messages="contatoForm.nome.$error" 
             class="alert alert-danger">
             <div ng-message="required">
                 Por favor, preencha o campo nome!
@@ -155,7 +156,9 @@
             </div>
         </div>
 
-        <div ng-messages="contatoForm.telefone.$error" class="alert alert-danger">
+        <div ng-show="contatoForm.telefone.$error.dirty" 
+            ng-messages="contatoForm.telefone.$error" 
+            class="alert alert-danger">
             <div ng-show="required && contatoForm.telefone.$dirty" >
                 Por favor, preencha o campo telefone!
             </div>
