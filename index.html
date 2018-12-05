@@ -41,13 +41,14 @@
             $scope.contatos = [];
             // Carregar contatos da api
             var carregarContatos = function() {
+                console.log('carrgando contatos...');
                 // A execução da httpGET retornará uma promisse de execução
                 $http.get("http://localhost:3412/contatos").then(function(response) {
                     // Promisse de success
                     $scope.contatos = response.data;
                 }, function(response) {
                     // Promisse de error
-                    console.log('Error: ' + data);
+                    console.log('Error: ' + response.data);
                 });
             };
 
@@ -66,13 +67,23 @@
             };
 
             $scope.adicionarContato = function(contato) {
-                // Realizando o angular.copy, para que a referência não seja igual
-                // e quando o item for editado, alterar outro objeto
-                $scope.contatos.push(angular.copy(contato));
-                // Excluindo o obj de contato
-                delete $scope.contato;
-                // Seta o form como pristine novamente
-                $scope.contatoForm.$setPristine();
+                contato.data = new Date();
+                $http.post("http://localhost:3412/contatos", contato).then(function(data) {
+                    // Promisse de success
+                    console.log(data.config.data);
+                    // Excluindo o obj de contato
+                    delete $scope.contato;
+                    // Seta o form como pristine novamente
+                    $scope.contatoForm.$setPristine();
+                    // Recarregar lista de contatos
+                    carregarContatos();
+                    // Inserir o contato cadastrado na lista
+                    // $scope.contatos.push(data.config.data);
+
+                }, function(data) {
+                    // Promisse de error
+                    console.log('Error: ' + data);
+                });
             };
             $scope.apagarContatos = function(contatos) {
                 $scope.contatos = contatos.filter(function(contato) {
@@ -115,7 +126,7 @@
                             | orderBy:criterioOrdenacao:criterioOrdenacaoDirecao"
                 ng-class="{'selecionado negrito': contato.selecionado}">
                 <td><input type="checkbox" ng-model="contato.selecionado"/></td>
-                <td>{{contato.nome | uppercase}}</td>
+                <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.operadora.nome}}</td>
                 <td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
@@ -142,24 +153,22 @@
             </select>
         </form>
 
-        <div ng-show="contatoForm.nome.$error.dirty" 
-            ng-messages="contatoForm.nome.$error" 
-            class="alert alert-danger">
-            <div ng-message="required">
+        <div ng-show="contatoForm.nome.$dirty" 
+            ng-messages="contatoForm.nome.$error" >
+            <div ng-message="required" class="alert alert-danger">
                 Por favor, preencha o campo nome!
             </div>
-            <div ng-message="minlength">
+            <div ng-message="minlength" class="alert alert-danger">
                 O campo nome deve ter no mínimo 10 caracteres
             </div>
         </div>
 
-        <div ng-show="contatoForm.telefone.$error.dirty" 
-            ng-messages="contatoForm.telefone.$error" 
-            class="alert alert-danger">
-            <div ng-show="required && contatoForm.telefone.$dirty" >
+        <div ng-show="contatoForm.telefone.$dirty" 
+            ng-messages="contatoForm.telefone.$error" >
+            <div ng-show="required" class="alert alert-danger">
                 Por favor, preencha o campo telefone!
             </div>
-            <div ng-show="pattern">
+            <div ng-show="pattern" class="alert alert-danger">
                 O campo telefone deve ter o formado 99999-9999
             </div>
         </div>
