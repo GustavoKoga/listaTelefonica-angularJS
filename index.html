@@ -6,106 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Lista telefônica</title>
+    
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
 
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular/angular-messages.min.js"></script>
     <script src="lib/angular/angular-locale_pt-br.js"></script>
-    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
-    <style>
-        .jumbotron {
-            width: 50vw;
-            text-align: center;
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .table{
-            margin-top: 20px;
-        }
-        .form-control {
-            margin-bottom: 5px;
-        }
-        .selecionado {
-            background-color: yellow;
-        }
-        .negrito {
-            font-weight: bold;
-        }
-    </style>
-
-    <script>
-        var app = angular.module("listaTelefonica", ["ngMessages"]);
-        app.controller("listaTelefonicaCtrl", function ($scope, $http) {
-            $scope.app = "Lista telefonica";
-            // Lista de contatos exibidos
-            $scope.contatos = [];
-            // Carregar contatos da api
-            var carregarContatos = function() {
-                console.log('carrgando contatos...');
-                // A execução da httpGET retornará uma promisse de execução
-                $http.get("http://localhost:3412/contatos").then(function(response) {
-                    // Promisse de success
-                    $scope.contatos = response.data;
-                }, function(response) {
-                    // Promisse de error
-                    console.log('Error: ' + response.data);
-                });
-            };
-
-            // Lista de operadoras
-            $scope.operadoras = [];
-            // Carregar operadoras da api
-            var carregarOperadoras = function() {
-                // A execução da httpGET retornará uma promisse de execução
-                $http.get("http://localhost:3412/operadoras").then(function(response) {
-                    // Promisse de success
-                    $scope.operadoras = response.data;
-                }, function(response) {
-                    // Promisse de error
-                    console.log('Error: ' + data);
-                });
-            };
-
-            $scope.adicionarContato = function(contato) {
-                contato.data = new Date();
-                $http.post("http://localhost:3412/contatos", contato).then(function(data) {
-                    // Promisse de success
-                    console.log(data.config.data);
-                    // Excluindo o obj de contato
-                    delete $scope.contato;
-                    // Seta o form como pristine novamente
-                    $scope.contatoForm.$setPristine();
-                    // Recarregar lista de contatos
-                    carregarContatos();
-                    // Inserir o contato cadastrado na lista
-                    // $scope.contatos.push(data.config.data);
-
-                }, function(data) {
-                    // Promisse de error
-                    console.log('Error: ' + data);
-                });
-            };
-            $scope.apagarContatos = function(contatos) {
-                $scope.contatos = contatos.filter(function(contato) {
-                    if (!contato.selecionado) {
-                        return contato;
-                    }
-                });
-            };
-            $scope.isContatoSelecionado = function(contatos) {
-                return contatos.some(function(contato) {
-                    return contato.selecionado;
-                });
-            };
-            $scope.ordenarPor = function(campo) {
-                $scope.criterioOrdenacao = campo;
-                $scope.criterioOrdenacaoDirecao = !$scope.criterioOrdenacaoDirecao;
-            };
-
-            carregarContatos();
-            carregarOperadoras();
-        });
-    </script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers/listaTelefonicaCtrl.js"></script>
 
 </head>
 <body ng-controller="listaTelefonicaCtrl">
@@ -186,7 +95,7 @@
     </div>
     
     <!-- 
-    <div ng-include="'footer.html'">
+    <div ng-include="'view/footer.html'">
     </div> 
     -->
 
