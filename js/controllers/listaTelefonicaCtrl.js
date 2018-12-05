@@ -1,11 +1,12 @@
-app.controller("listaTelefonicaCtrl", function ($scope, $http) {
+app.controller("listaTelefonicaCtrl", function ($scope, $http,
+    contatosAPI, operadorasAPI) {
     $scope.app = "Lista telefonica";
     // Lista de contatos exibidos
     $scope.contatos = [];
     // Carregar contatos da api
     var carregarContatos = function() {
         // A execução da httpGET retornará uma promisse de execução
-        $http.get("http://localhost:3412/contatos").then(function(response) {
+        contatosAPI.getContatos().then(function(response) {
             // Promisse de success
             $scope.contatos = response.data;
         }, function(response) {
@@ -19,7 +20,7 @@ app.controller("listaTelefonicaCtrl", function ($scope, $http) {
     // Carregar operadoras da api
     var carregarOperadoras = function() {
         // A execução da httpGET retornará uma promisse de execução
-        $http.get("http://localhost:3412/operadoras").then(function(response) {
+        operadorasAPI.getOperadoras().then(function(response) {
             // Promisse de success
             $scope.operadoras = response.data;
         }, function(response) {
@@ -30,17 +31,17 @@ app.controller("listaTelefonicaCtrl", function ($scope, $http) {
 
     $scope.adicionarContato = function(contato) {
         contato.data = new Date();
-        $http.post("http://localhost:3412/contatos", contato).then(function(data) {
+        contatosAPI.saveContato(contato).then(function(data) {
             // Promisse de success
-            console.log(data.config.data);
-            // Excluindo o obj de contato
+            var _contatoSalvo = data.config.data;
+            // Excluindo o obj de contato do escopo
             delete $scope.contato;
             // Seta o form como pristine novamente
             $scope.contatoForm.$setPristine();
             // Recarregar lista de contatos
-            carregarContatos();
+            // carregarContatos();
             // Inserir o contato cadastrado na lista
-            // $scope.contatos.push(data.config.data);
+            $scope.contatos.push(_contatoSalvo);
 
         }, function(data) {
             // Promisse de error
