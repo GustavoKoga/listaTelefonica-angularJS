@@ -4,9 +4,7 @@ angular.module("listaTelefonica").provider("serialGenerator", function(configCon
     Equivalencia do serviço factory dentro do $get
     */
 
-    console.log(configConst);
-    
-    var _length = 10;
+    var _length = 5;
 
     this.getLength = function() {
         return _length;

@@ -1,5 +1,5 @@
 angular.module("listaTelefonica").config(function(serialGeneratorProvider) {
     // As configs funcionam APENAS com um provider
 
-    serialGeneratorProvider.setLength(15);
+    // serialGeneratorProvider.setLength(15);
 }); 

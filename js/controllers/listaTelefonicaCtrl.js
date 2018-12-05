@@ -1,9 +1,8 @@
 app.controller("listaTelefonicaCtrl", function ($scope,
         contatosAPI, operadorasAPI, serialGenerator) {
     
-    console.log(serialGenerator.generate());
-
     $scope.app = "Lista telefonica";
+    
     // Lista de contatos exibidos
     $scope.contatos = [];
     // Carregar contatos da api

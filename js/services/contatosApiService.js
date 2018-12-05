@@ -13,7 +13,6 @@ angular.module("listaTelefonica").factory("contatosAPI", function($http, config)
         return $http.post(config.baseUrl + "/contatos", contato);
     }
 
-
     return {
         getContatos: _getContatos,
         saveContato: _saveContatos

@@ -13,9 +13,9 @@ var operadoras = [
 ];
 
 var contatos = [
-  {id: 1, nome: "Bruno", telefone: "9999-2222", data: new Date(), operadora: operadoras[0]},
-  {id: 2, nome: "Sandra", telefone: "9999-3333", data: new Date(), operadora: operadoras[1]},
-  {id: 3, nome: "Mariana", telefone: "9999-9999", data: new Date(), operadora: operadoras[2]}
+  {id: 1, serial:'9*2j8', nome: "bruno da silva", telefone: "9999-2222", data: new Date(), operadora: operadoras[0]},
+  {id: 2, serial:'*2u80', nome: "Sandra MARIA OLIVEIRA", telefone: "9999-3333", data: new Date(), operadora: operadoras[1]},
+  {id: 3, serial:'k9)*u', nome: "Mariana SALES", telefone: "9999-9999", data: new Date(), operadora: operadoras[2]}
 ];
 
 
