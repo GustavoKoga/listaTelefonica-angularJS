@@ -35,42 +35,36 @@
 
     <script>
         var app = angular.module("listaTelefonica", ["ngMessages"]);
-        app.controller("listaTelefonicaCtrl", function($scope) {
+        app.controller("listaTelefonicaCtrl", function ($scope, $http) {
             $scope.app = "Lista telefonica";
-            // Lista de contatos exibidos e população
-            $scope.contatos = [
-                {
-                    nome: 'Pedro', 
-                    telefone: '12341234',
-                    cor: 'blue',
-                    operadora: {nome: 'Oi', codigo: 14, categoria: 'Celular'},
-                    data: new Date()
-                },
-                {
-                    nome: 'Ana', 
-                    telefone: '56785678', 
-                    cor: 'red',
-                    operadora: {nome: 'Vivo', codigo: 15, categoria: 'Celular'},
-                    data: new Date()
-                },
-                {
-                    nome: 'Maria', 
-                    telefone: '90129012', 
-                    cor: 'yellow',
-                    operadora: {nome: 'Tim', codigo: 41, categoria: 'Celular'},
-                    data: new Date()
-                }
-            ];
-            // Lista de operadoras e população
-            $scope.operadoras = [
-                {nome: 'Oi', codigo: 14, categoria: 'Celular', preco: 2},
-                {nome: 'Vivo', codigo: 15, categoria: 'Celular', preco: 1},
-                {nome: 'Tim', codigo: 41, categoria: 'Celular', preco: 3},
-                {nome: 'Claro', codigo: 20, categoria: 'Celular', preco: 4},
-                {nome: 'GVT', codigo: 25, categoria: 'Fixo', preco: 1},
-                {nome: 'Embratel', codigo: 21, categoria: 'Fixo', preco: 2},
+            // Lista de contatos exibidos
+            $scope.contatos = [];
+            // Carregar contatos da api
+            var carregarContatos = function() {
+                // A execução da httpGET retornará uma promisse de execução
+                $http.get("http://localhost:3412/contatos").then(function(response) {
+                    // Promisse de success
+                    $scope.contatos = response.data;
+                }, function(response) {
+                    // Promisse de error
+                    console.log('Error: ' + data);
+                });
+            };
 
-            ];
+            // Lista de operadoras
+            $scope.operadoras = [];
+            // Carregar operadoras da api
+            var carregarOperadoras = function() {
+                // A execução da httpGET retornará uma promisse de execução
+                $http.get("http://localhost:3412/operadoras").then(function(response) {
+                    // Promisse de success
+                    $scope.operadoras = response.data;
+                }, function(response) {
+                    // Promisse de error
+                    console.log('Error: ' + data);
+                });
+            };
+
             $scope.adicionarContato = function(contato) {
                 // Realizando o angular.copy, para que a referência não seja igual
                 // e quando o item for editado, alterar outro objeto
@@ -79,23 +73,26 @@
                 delete $scope.contato;
                 // Seta o form como pristine novamente
                 $scope.contatoForm.$setPristine();
-            }
+            };
             $scope.apagarContatos = function(contatos) {
                 $scope.contatos = contatos.filter(function(contato) {
                     if (!contato.selecionado) {
                         return contato;
                     }
                 });
-            }
+            };
             $scope.isContatoSelecionado = function(contatos) {
                 return contatos.some(function(contato) {
                     return contato.selecionado;
                 });
-            }
+            };
             $scope.ordenarPor = function(campo) {
                 $scope.criterioOrdenacao = campo;
                 $scope.criterioOrdenacaoDirecao = !$scope.criterioOrdenacaoDirecao;
-            }
+            };
+
+            carregarContatos();
+            carregarOperadoras();
         });
     </script>
 
