@@ -1,9 +1,11 @@
-angular.module("listaTelefonica").provider("serialGenerator", function() {
+angular.module("listaTelefonica").provider("serialGenerator", function(configConst) {
     /*
     Serviços do tipo provider é o único que pode ser configurado de fora
     Equivalencia do serviço factory dentro do $get
     */
 
+    console.log(configConst);
+    
     var _length = 10;
 
     this.getLength = function() {
