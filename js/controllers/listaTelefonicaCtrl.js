@@ -1,5 +1,8 @@
 app.controller("listaTelefonicaCtrl", function ($scope,
-        contatosAPI, operadorasAPI) {
+        contatosAPI, operadorasAPI, serialGenerator) {
+    
+    console.log(serialGenerator.generate());
+
     $scope.app = "Lista telefonica";
     // Lista de contatos exibidos
     $scope.contatos = [];
@@ -30,6 +33,7 @@ app.controller("listaTelefonicaCtrl", function ($scope,
     };
 
     $scope.adicionarContato = function(contato) {
+        contato.serial = serialGenerator.generate();
         contato.data = new Date();
         contatosAPI.saveContato(contato).then(function(data) {
             // Promisse de success
