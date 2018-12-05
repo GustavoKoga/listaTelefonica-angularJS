@@ -1,4 +1,4 @@
-angular.module("listaTelefonica").provider("serialGenerator", function(configConst) {
+app.provider("serialGenerator", function(configConst) {
     /*
     Serviços do tipo provider é o único que pode ser configurado de fora
     Equivalencia do serviço factory dentro do $get
