@@ -1,4 +1,4 @@
-app.directive("uiDate", function() {
+app.directive("uiDate", function($filter) {
     return {
         require: "ngModel",
         link: function(scope, element, attrs, ctrl) {
@@ -20,7 +20,20 @@ app.directive("uiDate", function() {
                 ctrl.$setViewValue(_formatDate(ctrl.$viewValue));
                 // Renderizar a tela
                 ctrl.$render();
-                console.log(ctrl.$viewValue);
+            });
+
+            ctrl.$parsers.push(function(value) {
+                // O item só retorna ao escopo quando o return desta função é executado
+                // interceptando o valor para não ir ao escopo indevidamente
+                if (value.length === 10) {
+                    var dateArray = value.split('/');
+                    return new Date(dateArray[2], dateArray[1]-1, dateArray[0]); 
+                }
+
+            });
+            // Formatação dos valores
+            ctrl.$formatter.push(function(value) {
+                $filter("date")(value, "dd/MM/yyyy");
             });
         }
     }
