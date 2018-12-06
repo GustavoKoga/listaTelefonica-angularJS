@@ -1,9 +1,11 @@
 <html>
-    <div class="ui-alert">
-        <div class="ui-alert-title">
-            {{title}}
+    <body>
+        <div class="ui-alert">
+            <div class="ui-alert-title">
+                {{title}}
+            </div>
+            <div class="ui-alert-message" ng-transclude>
+            </div>
         </div>
-        <div class="ui-alert-message" ng-transclude>
-        </div>
-    </div>
+    </body>
 </html>

@@ -18,6 +18,7 @@
     <script src="js/config/serialGeneratorConfig.js"></script>
     <script src="js/controllers/listaTelefonicaCtrl.js"></script>
     <script src="js/directives/uiAlertDirective.js"></script>
+    <script src="js/directives/uiDateDirective.js"></script>
     <script src="js/filters/elipsisFilter.js"></script>
     <script src="js/filters/nameFilter.js"></script>
     <script src="js/services/contatosApiService.js"></script>
@@ -30,9 +31,8 @@
     <div class="jumbotron">
         <h3>{{app}}</h3>
 
-        <ui-alert title="Ops, aconteceu um problema!"
-            >
-            Não foi possível carregar os dados
+        <ui-alert ng-show="error" title="Ops, aconteceu um problema!">
+            {{error}}
         </ui-alert>
 
         <input type="text" ng-model="criterioBusca" placeholder="O que você busca?"
@@ -71,6 +71,8 @@
                 ng-model="contato.telefone" placeholder="Telefone"
                 ng-required="true" name="telefone"
                 ng-pattern="/^\d{4,5}-\d{4}$/"/>
+            <input class="form-control" ng-model="contato.data"
+                name="data" placeholder="Data" ui-date/>
             <select class="form-control"
                 ng-model="contato.operadora" 
                 ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' ) '  for operadora in operadoras | orderBy:'nome'"
