@@ -9,6 +9,7 @@
     
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/ui.css">
 
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular/angular-messages.min.js"></script>
@@ -16,6 +17,7 @@
     <script src="js/app.js"></script>
     <script src="js/config/serialGeneratorConfig.js"></script>
     <script src="js/controllers/listaTelefonicaCtrl.js"></script>
+    <script src="js/directives/uiAlertDirective.js"></script>
     <script src="js/filters/elipsisFilter.js"></script>
     <script src="js/filters/nameFilter.js"></script>
     <script src="js/services/contatosApiService.js"></script>
@@ -27,6 +29,12 @@
 <body ng-controller="listaTelefonicaCtrl">
     <div class="jumbotron">
         <h3>{{app}}</h3>
+
+        <ui-alert title="Ops, aconteceu um problema!"
+            >
+            Não foi possível carregar os dados
+        </ui-alert>
+
         <input type="text" ng-model="criterioBusca" placeholder="O que você busca?"
             class="form-control"/>
         <table class="table" ng-show="contatos.length > 0">
@@ -103,10 +111,8 @@
         </button>
     </div>
     
-    <!-- 
     <div ng-include="'view/footer.html'">
     </div> 
-    -->
 
 </body>
 </html>

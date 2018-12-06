@@ -13,7 +13,7 @@ app.controller("listaTelefonicaCtrl", function ($scope,
             $scope.contatos = response.data;
         }, function(response) {
             // Promisse de error
-            console.log('Error: ' + response.data);
+            $scope.error = "Não foi possível carregar os dados!";
         });
     };
 
